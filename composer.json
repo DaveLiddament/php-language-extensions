@@ -1,0 +1,21 @@
+{
+  "name": "dave-liddament/php-language-extensions",
+  "description": "Attributes for extending the PHP language, using static analysis to enforce new language constructs",
+  "type" : "library",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dave Liddament",
+      "email": "dave@lampbristol.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "DaveLiddament\\PhpLanguageExtensions\\" : "src/"
+    }
+  },
+  "requires" : {
+    "php": "^8"
+  }
+}
