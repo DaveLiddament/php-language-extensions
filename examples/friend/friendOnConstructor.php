@@ -2,7 +2,7 @@
 
 namespace FriendOnConstructor;
 
-use DaveLiddament\PhpstanPhpLanguageExtensions\Attributes\Friend;
+use DaveLiddament\PhpLanguageExtensions\Friend;
 
 class Person
 {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PackageOnMethod {
 
-    use DaveLiddament\PhpstanPhpLanguageExtensions\Attributes\Package;
+    use DaveLiddament\PhpLanguageExtensions\Package;
 
     class Person
     {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PackageRulesIgnoredForTestNamespace {
 
 
-    use DaveLiddament\PhpstanPhpLanguageExtensions\Attributes\Package;
+    use DaveLiddament\PhpLanguageExtensions\Package;
 
     #[Package]
     class Person

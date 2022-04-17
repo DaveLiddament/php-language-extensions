@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FriendOnMethod;
 
-use DaveLiddament\PhpstanPhpLanguageExtensions\Attributes\Friend;
+use DaveLiddament\PhpLanguageExtensions\Friend;
 
 class Person
 {

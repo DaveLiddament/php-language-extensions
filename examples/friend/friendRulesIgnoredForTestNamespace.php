@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FriendRulesIgnoredForTestNamespace {
 
-    use DaveLiddament\PhpstanPhpLanguageExtensions\Attributes\Friend;
+    use DaveLiddament\PhpLanguageExtensions\Friend;
 
 
     #[Friend(FriendUpdater::class)]

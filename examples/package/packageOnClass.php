@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PackageOnClass {
 
-    use DaveLiddament\PhpstanPhpLanguageExtensions\Attributes\Package;
+    use DaveLiddament\PhpLanguageExtensions\Package;
 
 
     #[Package]

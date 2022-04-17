@@ -2,7 +2,7 @@
 
 namespace PackageOnStaticMethod {
 
-    use DaveLiddament\PhpstanPhpLanguageExtensions\Attributes\Package;
+    use DaveLiddament\PhpLanguageExtensions\Package;
 
     class Person
     {
