@@ -9,9 +9,9 @@ use Attribute;
 #[Attribute(Attribute::TARGET_CLASS)]
 class Sealed
 {
-    /** @param class-string|array<int,class-string> $friends */
+    /** @param class-string ...$permitted */
     public function __construct(
-        public string|array $friends,
+        string ...$permitted,
     ) {
     }
 }

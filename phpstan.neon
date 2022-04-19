@@ -2,3 +2,6 @@ parameters:
     level: max
     paths:
     - src
+
+    ignoreErrors:
+    - '#^Constructor of class DaveLiddament\\PhpLanguageExtensions\\[a-zA-Z]+ has an unused parameter \$[a-z]+\.$#'
