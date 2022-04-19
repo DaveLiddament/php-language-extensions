@@ -242,4 +242,3 @@ See [Contributing](CONTRIBUTING.md).
 ## TODO
 
 - [] Add examples for Sealed
-- [] Add github actions
