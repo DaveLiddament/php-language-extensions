@@ -13,7 +13,7 @@ namespace PackageOnStaticMethod {
 
         public static function update(): void
         {
-            Person::updateName(); // OK
+            Person::updateName(); // OK: Calls to same class allowed.
         }
     }
 
@@ -21,11 +21,11 @@ namespace PackageOnStaticMethod {
     {
         public function updater(): void
         {
-            Person::updateName(); // OK
+            Person::updateName(); // OK: Call to Person::updateName allowed as has package visibility.
         }
     }
 
-    Person::updateName(); // OK
+    Person::updateName(); // OK: Call to Person::updateName allowed as has package visibility.
 }
 
 
@@ -37,7 +37,7 @@ namespace PackageOnStaticMethod2 {
     {
         public function update(): void
         {
-            Person::updateName(); // ERROR
+            Person::updateName(); // ERROR: Call to Person::updateName which has package visibility
         }
     }
 }

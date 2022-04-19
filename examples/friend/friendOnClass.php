@@ -24,7 +24,7 @@ class Updater
 {
     public function updater(Person $person): void
     {
-        $person->updateName(); // ERROR
+        $person->updateName(); // ERROR: Updater is not a Friend of Person
     }
 }
 

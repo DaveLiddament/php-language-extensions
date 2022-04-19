@@ -18,8 +18,8 @@ The intention, at least initially, is that these extra language features are enf
   - [package](#package)
   - [friend](#friend)
   - [sealed](#sealed)
-- [Further examples]
-- [Contributing]
+- [Further examples](#further-examples)
+- [Contributing](#contributing)
 
 
 
@@ -236,7 +236,7 @@ More detailed examples of how to use attributes is found in [examples](examples/
 
 ## Contributing
 
-TODO
+See [Contributing](CONTRIBUTING.md).
 
 
 ## TODO
@@ -244,3 +244,8 @@ TODO
 - [] Add contributing notes
 - [] Add examples for Sealed
 - [] Add CI
+  - [] PHPStan
+  - [] Psalm
+  - CS Fixer
+- [] Add github actions
+- 

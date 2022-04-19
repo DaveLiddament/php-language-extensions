@@ -13,7 +13,7 @@ class Person
 
     public static function update(): void
     {
-        Person::updateName(); // OK
+        Person::updateName(); // OK: Method calls within class allowed
     }
 }
 
@@ -21,7 +21,7 @@ class Updater
 {
     public function updater(): void
     {
-        Person::updateName(); // ERROR
+        Person::updateName(); // ERROR: Updater is not a friend of Person::updateName
     }
 }
 
@@ -31,6 +31,6 @@ class FriendUpdater
 {
     public function update(): void
     {
-        Person::updateName(); // OK
+        Person::updateName(); // OK: FriendUpdater is a friend of Person::updateName
     }
 }

@@ -1,25 +1,26 @@
 <?php
 
-namespace FriendNameSpace1 {
+namespace FriendOnDifferentNamespace1 {
     use DaveLiddament\PhpLanguageExtensions\Friend;
+    use FriendOnDifferentNamespace2\Builder;
 
     class Employee
     {
-        #[Friend(Foo\Bar\Builder::class)]
+        #[Friend(Builder::class)]
         public function update(): void
         {
         }
     }
 }
 
-namespace FriendNameSpace1\Foo\Bar {
-    use FriendNameSpace1\Employee;
+namespace FriendOnDifferentNamespace2 {
+    use FriendOnDifferentNamespace1\Employee;
 
     class Builder
     {
         public function update(Employee $employee): void
         {
-            $employee->update(); // OK
+            $employee->update(); // OK: Builder a friend of Employee
         }
     }
 }

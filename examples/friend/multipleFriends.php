@@ -18,7 +18,7 @@ class FriendUpdater
 {
     public function update(Person $person): void
     {
-        $person->updateName(); // OK
+        $person->updateName(); // OK: FriendUpdater a friend of Person::updateName
     }
 }
 
@@ -26,6 +26,6 @@ class AnotherFriendUpdater
 {
     public function update(Person $person): void
     {
-        $person->updateName(); // OK
+        $person->updateName(); // OK: AnotherFriendUpdater a friend of Person::updateName
     }
 }

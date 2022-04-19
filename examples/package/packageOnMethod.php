@@ -40,7 +40,7 @@ namespace PackageOnMethod2 {
         public function update(): void
         {
             $person = new Person();
-            $person->updateName(); // ERROR
+            $person->updateName(); // ERROR: Call to Person::updateName which has package visibility
         }
     }
 }

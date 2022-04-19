@@ -31,7 +31,7 @@ namespace FriendRulesIgnoredForTestNamespace\Test\Person {
     {
         public function updater(Person $person): void
         {
-            $person->updateName(); // OK calling from a test namespace
+            $person->updateName(); // OK: calling from a test namespace
         }
     }
 

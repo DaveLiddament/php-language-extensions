@@ -24,7 +24,7 @@ namespace PackageRulesIgnoredForTestClass\Person {
     {
         public function updater(Person $person): void
         {
-            $person->updateName(); // OK calling from a class with a name ending Test
+            $person->updateName(); // OK: calling from a class with a name ending Test
         }
     }
 
