@@ -241,11 +241,5 @@ See [Contributing](CONTRIBUTING.md).
 
 ## TODO
 
-- [] Add contributing notes
 - [] Add examples for Sealed
-- [] Add CI
-  - [] PHPStan
-  - [] Psalm
-  - CS Fixer
 - [] Add github actions
-- 
