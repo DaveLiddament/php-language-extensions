@@ -8,7 +8,7 @@ use DaveLiddament\PhpLanguageExtensions\Friend;
 
 class Person
 {
-    #[Friend([FriendUpdater::class, AnotherFriendUpdater::class])]
+    #[Friend(FriendUpdater::class, AnotherFriendUpdater::class)]
     public function updateName(): void
     {
     }

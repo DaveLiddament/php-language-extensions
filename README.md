@@ -190,7 +190,7 @@ $person = new Person();
 ```
 
 **NOTES:**
-- Multiple friends can be specified. E.g. `#[Friend([Foo::class, Bar::class])]`
+- Multiple friends can be specified. E.g. `#[Friend(Foo::class, Bar::class)]`
 - A class can have a `#[Friend]` attribute. Friendship is additive. E.g.
   ```php 
   #[Friend(Foo::class)]
