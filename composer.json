@@ -1,6 +1,7 @@
 {
   "name": "dave-liddament/php-language-extensions",
   "description": "Attributes for extending the PHP language, using static analysis to enforce new language constructs",
+  "keywords": ["static analysis", "package attribute", "friend attribute", "sealed attribute"],
   "type" : "library",
   "minimum-stability": "stable",
   "license": "MIT",
