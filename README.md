@@ -36,7 +36,7 @@ Use one of these:
 
 ### PHPStan
 
-To use PHPStan to enforce package level visibility add [this extension](https://github.com/DaveLiddament/phpstan-php-language-extension). 
+To use PHPStan to enforce package level visibility add [this extension](https://github.com/DaveLiddament/phpstan-php-language-extensions). 
 
 ```shell
 composer require --dev dave-liddament/phpstan-php-language-extensions
@@ -206,7 +206,7 @@ $person = new Person();
 
 ## Sealed 
 
-** This attribute is a work in progress **
+**This attribute is a work in progress**
 
 This replicates the rejected [sealed classes RFC](https://wiki.php.net/rfc/sealed_classes)
 
