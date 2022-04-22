@@ -90,7 +90,7 @@ namespace Foo {
   }
 }
 
-namepace Bar {
+namespace Bar {
 
   class Demo 
   {
