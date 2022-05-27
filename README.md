@@ -210,13 +210,13 @@ $person = new Person();
 
 This replicates the rejected [sealed classes RFC](https://wiki.php.net/rfc/sealed_classes)
 
-The `#[sealed]` attribute takes a list of classes or interfaces that can extend/implement the class/interface.
+The `#[Sealed]` attribute takes a list of classes or interfaces that can extend/implement the class/interface.
 
 E.g. 
 
 ```php
 
-#[sealed([Success::class, Failure::class])]
+#[Sealed([Success::class, Failure::class])]
 abstract class Result {} // Result can only be extended by Success or Failure
 
 // OK
