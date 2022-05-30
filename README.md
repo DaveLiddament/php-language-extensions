@@ -218,7 +218,7 @@ E.g.
 
 ```php
 
-#[sealed([Success::class, Failure::class])]
+#[Sealed([Success::class, Failure::class])]
 abstract class Result {} // Result can only be extended by Success or Failure
 
 // OK
