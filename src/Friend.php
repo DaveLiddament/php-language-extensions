@@ -6,6 +6,9 @@ namespace DaveLiddament\PhpLanguageExtensions;
 
 use Attribute;
 
+/**
+ * Limits calling methods to those listed as the method's or class's friends.
+ */
 #[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_METHOD)]
 class Friend
 {
