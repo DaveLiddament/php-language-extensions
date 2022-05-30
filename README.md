@@ -5,6 +5,7 @@ The intention, at least initially, is that these extra language features are enf
 
 **Language feature added:**
 - [Friend](#friend)
+- [InjectableVersion](#injectableVersion)
 - [Package](#package) 
 - [Sealed](#sealed)
 - [TestTag](#testtag)
@@ -16,8 +17,9 @@ The intention, at least initially, is that these extra language features are enf
   - [PHPStan](#phpstan)
   - [Psalm](#psalm)
 - [New Language Features](#new-language-features)
-  - [Package](#package)
   - [Friend](#friend)
+  - [InjectableVersion](#injectableVersion)
+  - [Package](#package)
   - [Sealed](#sealed)
   - [TestTag](#testtag)
 - [Further examples](#further-examples)
@@ -269,6 +271,75 @@ NOTES:
 - For determining what is "test code" see the relevant plugin. E.g. the [PHPStan extension](https://github.com/DaveLiddament/phpstan-php-language-extensions) can be setup to either:
   - Assume all classes that end `Test` is test code. See [className config option](https://github.com/DaveLiddament/phpstan-php-language-extensions#exclude-checks-on-class-names-ending-with-test).
   - Assume all classes within a namespace is test code. See [namespace config option](https://github.com/DaveLiddament/phpstan-php-language-extensions#exclude-checks-based-on-test-namespace).
+
+
+
+## InjectableVersion
+
+The `#[InjectableVersion]` is used in conjunction with dependency injection.
+`#[InjectableVersion]` is applied to a class or interface. 
+It denotes that it is this version and not any classes that implement/extend that should be used in the codebase.
+
+E.g.
+
+```php
+
+#[InjectableVersion]
+class PersonRepository {...} // This is the version that should be type hinted in constructors.
+
+class DoctrinePersonRepository extends PersonRepository {...}
+
+class PersonCreator {
+    public function __construct(
+        private PersonRepository $personRepository, // OK - using the injectable version
+    )
+}
+class PersonUpdater {
+    public function __construct(
+        private DoctrinePersonRepository $personRepository, // ERROR - not using the InjectableVersion
+    )
+}
+```
+
+This also works for collections:
+
+```php
+
+#[InjectableVersion]
+interface Validator {...} // This is the version that should be type hinted in constructors.
+
+class NameValidator implements Validator {...}
+class AddressValidator implements Validator {...}
+
+class PersonValidator {
+    /** @param Validator[] $validators */
+    public function __construct(
+        private array $validators, // OK - using the injectable version
+    )
+}
+```
+
+By default, only constructor arguments are checked. Most DI should be done via constructor injection. 
+
+In cases where dependencies are injected by methods that aren't constructors, the method must be marked with a `#[CheckInjectableVersion]`:
+
+```php
+
+#[InjectableVersion]
+interface Logger {...}
+
+class FileLogger implements Logger {...}
+
+class MyService 
+{
+    #[CheckInjectableVersion]
+    public function setLogger(Logger $logger): void {} // OK - Injectable Version injected
+    
+    public function addLogger(FileLogger $logger): void {} // No issue raised because addLogger doesn't have the #[CheckInjectableVersion] attribute.
+}
+
+```
+
 
 
 ## Further examples
