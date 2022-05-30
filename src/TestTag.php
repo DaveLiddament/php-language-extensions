@@ -7,10 +7,10 @@ namespace DaveLiddament\PhpLanguageExtensions;
 use Attribute;
 
 /**
- * Limits calling methods to those listed as the method's or class's friends.
+ * Add the TestTag attribute to a method that should only be called by test code.
  */
-#[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_METHOD)]
-class Friend
+#[Attribute(Attribute::TARGET_METHOD)]
+class TestTag
 {
     /** @param class-string ...$friends */
     public function __construct(
