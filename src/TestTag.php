@@ -1,0 +1,20 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DaveLiddament\PhpLanguageExtensions;
+
+use Attribute;
+
+/**
+ * Add the TestTag attribute to a method that should only be called by test code.
+ */
+#[Attribute(Attribute::TARGET_METHOD)]
+class TestTag
+{
+    /** @param class-string ...$friends */
+    public function __construct(
+       string ...$friends,
+    ) {
+    }
+}
