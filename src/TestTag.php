@@ -12,9 +12,4 @@ use Attribute;
 #[Attribute(Attribute::TARGET_METHOD)]
 class TestTag
 {
-    /** @param class-string ...$friends */
-    public function __construct(
-       string ...$friends,
-    ) {
-    }
 }
