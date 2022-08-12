@@ -14,7 +14,7 @@ class Friend
 {
     /** @param class-string ...$friends */
     public function __construct(
-       string ...$friends,
+        string ...$friends,
     ) {
     }
 }
