@@ -1,6 +1,16 @@
 # PHP Language Extensions (currently in BETA)
 
-This library provides attributes for extending the PHP language.
+[![PHP versions: 8.0, 8.1](https://img.shields.io/badge/php-8.0|8.1-blue.svg)](https://packagist.org/packages/dave-liddament/sarb)
+[![Latest Stable Version](https://poser.pugx.org/dave-liddament/php-language-extensions/v/stable)](https://packagist.org/packages/dave-liddament/php-languages-extensions)
+[![License](https://poser.pugx.org/dave-liddament/sarb/license)](https://github.com/DaveLiddament/sarb/blob/master/LICENSE.md)
+[![Total Downloads](https://poser.pugx.org/dave-liddament/php-language-extensions/downloads)](https://packagist.org/packages/dave-liddament/php-language-extensions/stats)
+
+[![Continuous Integration](https://github.com/DaveLiddament/php-language-extensions/workflows/Full%20checks/badge.svg)](https://github.com/DaveLiddament/php-language-extensions/actions)
+[![Psalm level 1](https://img.shields.io/badge/Psalm-max%20level-brightgreen.svg)](https://github.com/DaveLiddament/php-language-extensions/blob/master/psalm.xml)
+[![PHPStan max](https://img.shields.io/badge/PHPStan-max%20level-brightgreen.svg)](https://github.com/DaveLiddament/php-language-extensions/blob/master/phpstan.neon)
+
+
+This library provides [attributes](https://www.php.net/manual/en/language.attributes.overview.php) that are used by static analysers to enforce new language features. 
 The intention, at least initially, is that these extra language features are enforced by static analysis tools (such as Psalm, PHPStan and, ideally, PhpStorm) and NOT at runtime.
 
 **Language feature added:**
