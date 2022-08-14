@@ -7,15 +7,14 @@ namespace DaveLiddament\PhpLanguageExtensions;
 use Attribute;
 
 /**
- * @deprecated use #[CallableFrom] instead
- * Limits calling methods to those listed as the method's or class's friends
+ * Limits calling methods to those listed in $classesCallableFrom.
  */
 #[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_METHOD)]
-final class Friend
+final class CallableFrom
 {
-    /** @param class-string ...$friends */
+    /** @param class-string ...$classesCallableFrom */
     public function __construct(
-        string ...$friends,
+        string ...$classesCallableFrom,
     ) {
     }
 }
