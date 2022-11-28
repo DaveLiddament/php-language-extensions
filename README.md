@@ -101,7 +101,7 @@ namespace Bar {
     public function allowed(): void 
     {
       // Code below is OK. Only calling public methods
-      $jane = PersonBuilder::create("Jane");
+      $jane = PersonFactory::create("Jane");
       echo $jane->getName();
     }
   
