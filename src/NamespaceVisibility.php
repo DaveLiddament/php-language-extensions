@@ -6,7 +6,7 @@ namespace DaveLiddament\PhpLanguageExtensions;
 
 use Attribute;
 
-#[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_METHOD)]
+#[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
 final class NamespaceVisibility
 {
     public function __construct(
