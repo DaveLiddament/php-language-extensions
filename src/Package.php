@@ -8,6 +8,6 @@ namespace DaveLiddament\PhpLanguageExtensions;
  * Limit calls to classes or methods with the Package attribute to calls from classes in the name namespace.
  */
 #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
-class Package
+final class Package
 {
 }
