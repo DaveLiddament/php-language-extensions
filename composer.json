@@ -1,8 +1,13 @@
 {
   "name": "dave-liddament/php-language-extensions",
   "description": "Attributes for extending the PHP language, using static analysis to enforce new language constructs",
-  "keywords": ["static analysis", "package attribute", "friend attribute", "sealed attribute"],
-  "type" : "library",
+  "keywords": [
+    "static analysis",
+    "package attribute",
+    "friend attribute",
+    "sealed attribute"
+  ],
+  "type": "library",
   "minimum-stability": "stable",
   "license": "MIT",
   "authors": [
@@ -13,11 +18,11 @@
   ],
   "autoload": {
     "psr-4": {
-      "DaveLiddament\\PhpLanguageExtensions\\" : "src/"
+      "DaveLiddament\\PhpLanguageExtensions\\": "src/"
     }
   },
-  "require" : {
-    "php": "^8"
+  "require": {
+    "php": "^8.0 || ^8.1 || ^8.2"
   },
   "require-dev": {
     "phpstan/phpstan": "^1.5",
@@ -26,18 +31,21 @@
     "vimeo/psalm": "^4.22"
   },
   "scripts": {
-    "composer-validate" : "@composer validate --no-check-all --strict",
-    "cs-fix" : "php-cs-fixer fix",
-    "cs" : "php-cs-fixer fix --dry-run -v",
-    "phpstan" : "phpstan analyse",
-    "psalm" : "psalm",
-    "lint" : "parallel-lint src",
-    "ci" : [
-        "@composer-validate",
-        "@lint",
-        "@cs",
-        "@phpstan",
-        "@psalm"
-      ]
-    }	
+    "composer-validate": "@composer validate --no-check-all --strict",
+    "cs-fix": "php-cs-fixer fix",
+    "cs": [
+      "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
+      "php-cs-fixer fix --dry-run -v"
+    ],
+    "phpstan": "phpstan analyse",
+    "psalm": "psalm",
+    "lint": "parallel-lint src",
+    "ci": [
+      "@composer-validate",
+      "@lint",
+      "@cs",
+      "@phpstan",
+      "@psalm"
+    ]
+  }
 }
