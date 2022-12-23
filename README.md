@@ -83,16 +83,16 @@ namespace Foo {
       private string $name;
     ) {
     }
-    
+
     #[Package]
     public function updateName(string $name): void
     {
-        $this->name = $name;
+      $this->name = $name;
     }
-    
+
     public function getName(): string
     {
-       return $this->name;
+      return $this->name;
     }
   }
 
@@ -115,13 +115,13 @@ namespace Bar {
       $jane = PersonBuilder::create("Jane");
       echo $jane->getName();
     }
-  
+
     public function notAllowed1(Person $person): void
     {
       // ERROR with line below: `update` method has package visibility. It can only be called from the '`Foo` namespace.
       $person->updateName("Robert")
     }
-  
+
     public function notAllowed2(): void
     {
       // ERROR with line below. Person's __construct method has package visibility. It can only be called by code in the `Foo` namespace.
