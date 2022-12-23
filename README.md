@@ -1,5 +1,16 @@
 # PHP Language Extensions (currently in BETA)
 
+[![PHP versions: 8.0 to 8.2](https://img.shields.io/badge/php-8.0|8.1|8.2-blue.svg)](https://packagist.org/packages/dave-liddament/php-language-extensions)
+[![Latest Stable Version](https://poser.pugx.org/dave-liddament/php-language-extensions/v/stable)](https://packagist.org/packages/dave-liddament/php-language-extensions)
+[![License](https://poser.pugx.org/dave-liddament/php-language-extensions/license)](https://github.com/DaveLiddament/php-language-extensions/blob/main/LICENSE.md)
+[![Total Downloads](https://poser.pugx.org/dave-liddament/php-language-extensions/downloads)](https://packagist.org/packages/dave-liddament/php-language-extensions/stats)
+
+[![Continuous Integration](https://github.com/DaveLiddament/php-language-extensions/workflows/Full%20checks/badge.svg)](https://github.com/DaveLiddament/php-language-extensions/actions/workflows/full-checks.yml)
+[![Psalm level 1](https://img.shields.io/badge/Psalm-max%20level-brightgreen.svg)](https://github.com/DaveLiddament/php-language-extensions/blob/main/psalm.xml)
+[![PHPStan level 8](https://img.shields.io/badge/PHPStan-max%20level-brightgreen.svg)](https://github.com/DaveLiddament/php-language-extensions/blob/main/phpstan.neon)
+
+
+
 This library provides attributes for extending the PHP language (e.g. adding `package` visibility).
 The intention, at least initially, is that these extra language features are enforced by static analysis tools (such as Psalm, PHPStan and, ideally, PhpStorm) and NOT at runtime.
 
