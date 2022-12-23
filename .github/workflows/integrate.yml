@@ -68,6 +68,7 @@ jobs:
           - "8.2"
         dependencies:
           - "lowest"
+          - "locked"
           - "highest"
     runs-on: "ubuntu-22.04"
     steps:
