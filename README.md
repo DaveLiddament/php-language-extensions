@@ -361,8 +361,3 @@ More detailed examples of how to use attributes is found in [examples](examples/
 ## Contributing
 
 See [Contributing](CONTRIBUTING.md).
-
-
-## TODO
-
-- [] Add examples for Sealed
