@@ -5,7 +5,7 @@
 [![License](https://poser.pugx.org/dave-liddament/php-language-extensions/license)](https://github.com/DaveLiddament/php-language-extensions/blob/main/LICENSE.md)
 [![Total Downloads](https://poser.pugx.org/dave-liddament/php-language-extensions/downloads)](https://packagist.org/packages/dave-liddament/php-language-extensions/stats)
 
-[![Continuous Integration](https://github.com/DaveLiddament/php-language-extensions/workflows/Full%20checks/badge.svg)](https://github.com/DaveLiddament/php-language-extensions/actions/workflows/full-checks.yml)
+[![Continuous Integration](https://github.com/DaveLiddament/php-language-extensions/workflows/Full%20checks/badge.svg)](https://github.com/DaveLiddament/php-language-extensions/actions)
 [![Psalm level 1](https://img.shields.io/badge/Psalm-max%20level-brightgreen.svg)](https://github.com/DaveLiddament/php-language-extensions/blob/main/psalm.xml)
 [![PHPStan level 8](https://img.shields.io/badge/PHPStan-max%20level-brightgreen.svg)](https://github.com/DaveLiddament/php-language-extensions/blob/main/phpstan.neon)
 
