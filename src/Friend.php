@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace DaveLiddament\PhpLanguageExtensions;
 
-use Attribute;
-
 /**
  * Limits calling methods to those listed as the method's or class's friends.
  */

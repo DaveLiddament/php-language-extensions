@@ -18,6 +18,7 @@ return $config
             'no_useless_return' => true,
             'ordered_imports' => true,
             'phpdoc_order' => true,
+            'no_unused_imports' => true,
             'strict_comparison' => true,
             'phpdoc_align' => false,
             'phpdoc_to_comment' => false,
