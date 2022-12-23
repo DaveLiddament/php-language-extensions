@@ -6,7 +6,7 @@ namespace DaveLiddament\PhpLanguageExtensions;
 
 use Attribute;
 
-#[Attribute(Attribute::TARGET_METHOD)]
+#[\Attribute(\Attribute::TARGET_METHOD)]
 class CheckInjectableVersion
 {
 }

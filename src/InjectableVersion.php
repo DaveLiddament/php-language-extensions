@@ -6,7 +6,7 @@ namespace DaveLiddament\PhpLanguageExtensions;
 
 use Attribute;
 
-#[Attribute(Attribute::TARGET_CLASS)]
+#[\Attribute(\Attribute::TARGET_CLASS)]
 class InjectableVersion
 {
 }
