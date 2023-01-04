@@ -240,7 +240,7 @@ namespace Foo {
   
   class Ringer 
   {
-    public function ring(Telephone $telephone): Person
+    public function ring(Telephone $telephone): void
     {
       $telephone->ring(); // ERROR - Can only all Telephone::ring() from namespace Bar
     }
@@ -253,7 +253,7 @@ namespace Bar {
   
   class AnotherRinger
   {
-    public function ring(Telephone $telephone): Person
+    public function ring(Telephone $telephone): void
     {
       $telephone->ring(); // OK - Allowed to call Telephone::ring() from namespace Bar
     }
