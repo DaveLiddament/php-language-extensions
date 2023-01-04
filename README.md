@@ -10,8 +10,7 @@
 [![PHPStan level 8](https://img.shields.io/badge/PHPStan-max%20level-brightgreen.svg)](https://github.com/DaveLiddament/php-language-extensions/blob/main/phpstan.neon)
 
 
-
-This library provides attributes for extending the PHP language (e.g. adding `package` visibility).
+This library provides [attributes](https://www.php.net/manual/en/language.attributes.overview.php) that are used by static analysers to enforce new language features. 
 The intention, at least initially, is that these extra language features are enforced by static analysis tools (such as Psalm, PHPStan and, ideally, PhpStorm) and NOT at runtime.
 
 **Language feature added:**
@@ -51,7 +50,7 @@ Use one of these:
 
 ### PHPStan
 
-To use PHPStan to enforce package level visibility add [this extension](https://github.com/DaveLiddament/phpstan-php-language-extensions). 
+If you're using PHPStan then use [this extension](https://github.com/DaveLiddament/phpstan-php-language-extensions) to enforce the rules.
 
 ```shell
 composer require --dev dave-liddament/phpstan-php-language-extensions
@@ -330,7 +329,7 @@ class PersonValidator {
 }
 ```
 
-By default, only constructor arguments are checked. Most DI should be done via constructor injection. 
+By default, only constructor arguments are checked. Most DI should be done via constructor injection.
 
 In cases where dependencies are injected by methods that aren't constructors, the method must be marked with a `#[CheckInjectableVersion]`:
 
@@ -352,6 +351,70 @@ class MyService
 ```
 
 
+
+
+## Sealed
+
+This is inspired by the rejected [sealed classes RFC](https://wiki.php.net/rfc/sealed_classes)
+
+The `#[Sealed]` attribute takes a list of classes or interfaces that can extend/implement the class/interface.
+
+E.g.
+
+```php
+
+#[Sealed([Success::class, Failure::class])]
+abstract class Result {} // Result can only be extended by Success or Failure
+
+// OK
+class Success extends Result {}
+
+// OK
+class Failure extends Result {}
+
+// ERROR AnotherClass is not allowed to extend Result
+class AnotherClass extends Result {}
+```
+
+
+## TestTag
+
+The `#[TestTag]` attribute is an idea borrowed from hardware testing. Methods marked with this attribute are only available to test code.
+
+E.g.
+
+```php
+class Person {
+
+    #[TestTag]
+    public function setId(int $id) 
+    {
+      $this->id = $id;
+    }
+}
+
+
+function updatePersonId(Person $person): void 
+{
+    $person->setId(10);  // ERROR - not test code.
+}
+
+
+class PersonTest 
+{
+    public function setup(): void
+    {
+        $person = new Person();
+        $person->setId(10); // OK - This is test code.
+    }
+}
+```
+
+NOTES:
+- Methods with the`#[TestTag]` MUST have public visibility.
+- For determining what is "test code" see the relevant plugin. E.g. the [PHPStan extension](https://github.com/DaveLiddament/phpstan-php-language-extensions) can be setup to either:
+    - Assume all classes that end `Test` is test code. See [className config option](https://github.com/DaveLiddament/phpstan-php-language-extensions#exclude-checks-on-class-names-ending-with-test).
+    - Assume all classes within a given namespace is test code. See [namespace config option](https://github.com/DaveLiddament/phpstan-php-language-extensions#exclude-checks-based-on-test-namespace).
 
 ## Further examples
 
