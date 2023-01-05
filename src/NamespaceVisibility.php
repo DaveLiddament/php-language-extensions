@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace DaveLiddament\PhpLanguageExtensions;
 
-/**
- * Limits calling methods to those listed as the method's or class's friends.
- */
+use Attribute;
+
 #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
-final class Friend
+final class NamespaceVisibility
 {
-    /** @param class-string ...$friends */
     public function __construct(
-        string ...$friends,
+        ?string $namespace = null,
+        bool $excludeSubNamespaces = false,
     ) {
     }
 }
