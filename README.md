@@ -15,8 +15,8 @@ The intention, at least initially, is that these extra language features are enf
 
 **Language feature added:**
 - [Friend](#friend)
+- [NamespaceVisibility](#namespaceVisibility)
 - [InjectableVersion](#injectableVersion)
-- [Package](#package) 
 - [Sealed](#sealed)
 - [TestTag](#testtag)
 
@@ -28,13 +28,15 @@ The intention, at least initially, is that these extra language features are enf
   - [Psalm](#psalm)
 - [New Language Features](#new-language-features)
   - [Friend](#friend)
+  - [NamespaceVisibility](#namespaceVisibility)
   - [InjectableVersion](#injectableVersion)
-  - [Package](#package)
   - [Sealed](#sealed)
   - [TestTag](#testtag)
+  - Deprecated
+    - [Package](#package) replace with [NamespaceVisibility](#namespaceVisibility)
+    
 - [Further examples](#further-examples)
 - [Contributing](#contributing)
-
 
 
 ## Installation
@@ -65,115 +67,12 @@ Coming soon.
 
 ## New language features
 
-## Package
-
-The `#[Package]` attribute acts like an extra visibility modifier like `public`, `protected` and `private`. It is inspired by Java's `package` visibility modifier.
-The `#[Package]` attribute limits the visibility of a class or method to only being accessible from code in the same namespace. 
-
-Example applying `#[Package]` to methods:
-
-```php
-namespace Foo {
-
-  class Person 
-  {
-    #[Package]
-    public function __construct(
-      private string $name;
-    ) {
-    }
-    
-    #[Package]
-    public function updateName(string $name): void
-    {
-        $this->name = $name;
-    }
-    
-    public function getName(): string
-    {
-       return $this->name;
-    }
-  }
-
-  class PersonFactory
-  {
-    public static function create(string $name): Person
-    {
-      return new Person($name); // This is allowed
-    }
-  }
-}
-
-namespace Bar {
-
-  class Demo 
-  {
-    public function allowed(): void 
-    {
-      // Code below is OK. Only calling public methods
-      $jane = PersonBuilder::create("Jane");
-      echo $jane->getName();
-    }
-  
-    public function notAllowed1(Person $person): void
-    {
-      // ERROR with line below: `update` method has package visibility. It can only be called from the '`Foo` namespace.
-      $person->updateName("Robert")
-    }
-  
-    public function notAllowed2(): void
-    {
-      // ERROR with line below. Person's __construct method has package visibility. It can only be called by code in the `Foo` namespace.
-      $jane = new Person(); 
-    }
-  }
-}
-```
-
-Example applying `#[Package]` to classes:
-
-```php
-namespace Foo {
-
-  #[Package]
-  class Mailer 
-  {
-    public function sendMessage(string $message): void
-    {
-      // Some implementation
-    } 
-  }
-}
-
-namespace Bar {
-
-  class PdfSender
-  {
-    public function __invoke(Mailer $mailer): void
-    {
-      // ERROR: The method Mailer::sendMessage is on a package level class. 
-      $mailer->sendMessage("some message");
-    }
-  }
-
-}
-```
-
-**NOTES:**
-
-- If adding the `#[Package]` to a method, this method MUST have public visibility. 
-- If a class is marked with `#[Package]` then all its public methods are treated as having package visibility. 
-- This is currently limited to method calls (including `__construct`).  
-- Namespaces must match exactly. E.g. a package level method in `Foo\Bar` is only accessible from `Foo\Bar`. It is not accessible from `Foo` or `Foo\Bar\Baz`
-
-
 ## Friend
 
-A method or class can supply via a `#[Friend]` attribute a list of classes, they are friends with. Only their friend's classes may call the method.
-Friendship is not reciprocated, e.g. if Dog makes Cat a friend, this does not mean that Cat considers Dog a friend. 
-This is loosely based on C++ friend feature. 
+A method or class can supply via a `#[Friend]` attribute a list of classes. Only these classes can call the method.
+This is loosely based on the C++ friend feature.
 
-Example:
+In the example below the `Person::__construct` method can only be called from `PersonBuilder`:
 
 ```php
 
@@ -191,7 +90,7 @@ class PersonBuilder
 {
     public function build(): Person
     {
-        $person = new Person(): // OK PersonBuilder is a friend of Person
+        $person = new Person(): // OK as PersonBuilder is allowed to call Person's construct method.
         // set up Person
         return $person;
     }
@@ -204,90 +103,210 @@ $person = new Person();
 ```
 
 **NOTES:**
-- Multiple friends can be specified. E.g. `#[Friend(Foo::class, Bar::class)]`
-- A class can have a `#[Friend]` attribute. Friendship is additive. E.g.
+- Multiple classes can be specified. E.g. `#[Friend(Foo::class, Bar::class)]`
+- A class can have a `#[Friend]` attribute, classes listed here are applied to every method.
+  ```php 
+  #[Friend(Foo::class)]
+  class Entity
+  {
+    public function ping(): void // ping has friend Bar
+    {
+    }
+  }
+  ```
+- The `#[Friend]` attribute is additive. If a class and a method have the `#[Friend]` the method can be called from any of the classes listed. E.g. 
   ```php 
   #[Friend(Foo::class)]
   class Entity
   {
     #[Friend(Bar::class)] 
-    public function ping(): void // ping is friends with Foo and Bar
+    public function pong(): void // pong has friends Foo and Bar
     {
     }
   }
-  ```
+  ```  
 - This is currently limited to method calls (including `__construct`).
 
-## Sealed 
 
-**This attribute is a work in progress**
 
-This replicates the rejected [sealed classes RFC](https://wiki.php.net/rfc/sealed_classes)
+## NamespaceVisibility
 
-The `#[Sealed]` attribute takes a list of classes or interfaces that can extend/implement the class/interface.
+The `#[NamespaceVisibility]` attribute acts as extra visibility modifier like `public`, `protected` and `private`. 
+By default, the `#[NamespaceVisibility]` attribute limits the visibility of a class or method to only being accessible from in the same namespace, or sub namespace. 
+
+Example applying `#[NamespaceVisibility]` to the `Telephone::ring` method:
+
+```php
+namespace Foo {
+
+  class Telephone 
+  {
+    #[NamespaceVisibility]
+    public function ring(): void
+    {
+    }
+  }
+
+  class Ringer
+  {
+    public function ring(Telephone $telephone): Person
+    {
+      $telephone->ring(); // OK calling Telephone::ring() from same namespace
+    }
+  }
+}
+
+namespace Foo\SubNamespace {
+
+  use Foo\Telephone;
+  
+  class SubNamespaceRinger
+  {
+    public function ring(Telephone $telephone): Person
+    {
+      $telephone->ring(); // OK calling Telephone::ring() from sub namespace
+    }
+  }
+}
+
+
+namespace Bar {
+
+  use Foo\Telephone;
+  
+  class DifferentNamespaceRinger
+  {
+    public function ring(Telephone $telephone): Person
+    {
+      $telephone->ring(); // ERROR calling Telephone::ring() from different namespace
+    }
+  }
+}
+```
+
+The `#[NamespaceVisibility]` attribute has 2 optional arguments:
+
+#### excludeSubNamespaces option
+
+This is a boolean value. Its default value is false. 
+If set to true then calls to methods from sub namespaces are not allowed.
+E.g.
+
+```php
+namespace Foo {
+
+  class Telephone 
+  {
+    #[NamespaceVisibility(excludeSubNamespaces: true)]
+    public function ring(): void
+    {
+    }
+  }
+
+}
+
+namespace Foo\SubNamespace {
+
+  use Foo\Telephone;
+  
+  class SubNamespaceRinger
+  {
+    public function ring(Telephone $telephone): Person
+    {
+      $telephone->ring(); // ERROR - Not allowed to call Telephone::ring() from a sub namespace
+    }
+  }
+}
+```
+
+#### namespace option
+
+This is a string or null value. Its default value is null.
+If it is set, then this is the namespace that you are allowed to call the method on.
+
+In the example below you can only call `Telephone::ring` from the `Bar` namespace.
+
+
+```php
+namespace Foo {
+
+  class Telephone 
+  {
+    #[NamespaceVisibility(namespace: "Bar")]
+    public function ring(): void
+    {
+    }
+  }
+  
+  class Ringer 
+  {
+    public function ring(Telephone $telephone): void
+    {
+      $telephone->ring(); // ERROR - Can only all Telephone::ring() from namespace Bar
+    }
+  }
+}
+
+namespace Bar {
+
+  use Foo\Telephone;
+  
+  class AnotherRinger
+  {
+    public function ring(Telephone $telephone): void
+    {
+      $telephone->ring(); // OK - Allowed to call Telephone::ring() from namespace Bar
+    }
+  }
+}
+```
+
+#### NamespaceVisibility on classes
+
+If a class was the `#[NamespaceVisibility]` Attribute, then all its public methods are treated as Namespace visibility. 
 
 E.g. 
 
 ```php
+namespace Foo {
 
-#[Sealed(Success::class, Failure::class)]
-abstract class Result {} // Result can only be extended by Success or Failure
-
-// OK
-class Success extends Result {}
-
-// OK
-class Failure extends Result {}
-
-// ERROR AnotherClass is not allowed to extend Result
-class AnotherClass extends Result {}
+  #[NamespaceVisibility()]
+  class Telephone 
+  {
+    public function ring(): void // This method has NamespaceVisibility
+    { }
+  }
+}
 ```
 
-## TestTag
-
-The `#[TestTag]` attribute is an idea borrowed from hardware testing. Methods marked with this attribute are only available to test code.
-
-E.g.
+If both the class and one of the class's methods has a `#[NamespaceVisibility]` attribute, then the method's attribute 
+takes precedence.
 
 ```php
-class Person {
+namespace Foo {
 
-    #[TestTag]
-    public function setId(int $id) 
-    {
-      $this->id = $id;
-    }
-}
-
-
-function updatePersonId(Person $person): void 
-{
-    $person->setId(10);  // ERROR - not test code.
-}
-
-
-class PersonTest 
-{
-    public function setup(): void
-    {
-        $person = new Person();
-        $person->setId(10); // OK - This is test code.
-    }
+  #[NamespaceVisibility(namespace: 'Bar')]
+  class Telephone 
+  {
+    #[NamespaceVisibility(namespace: 'Baz')]
+    public function ring(): void // This method can only be called from the namespace Baz
+    { }
+  }
 }
 ```
 
-NOTES:
-- Methods with the`#[TestTag]` MUST have public visibility.
-- For determining what is "test code" see the relevant plugin. E.g. the [PHPStan extension](https://github.com/DaveLiddament/phpstan-php-language-extensions) can be setup to either:
-  - Assume all classes that end `Test` is test code. See [className config option](https://github.com/DaveLiddament/phpstan-php-language-extensions#exclude-checks-on-class-names-ending-with-test).
-  - Assume all classes within a namespace is test code. See [namespace config option](https://github.com/DaveLiddament/phpstan-php-language-extensions#exclude-checks-based-on-test-namespace).
+
+#### NOTES:
+
+- If adding the `#[NamespaceVisibility]` to a method, this method MUST have public visibility.
+- This is currently limited to method calls (including `__construct`).
 
 
 
 ## InjectableVersion
 
 The `#[InjectableVersion]` is used in conjunction with dependency injection.
-`#[InjectableVersion]` is applied to a class or interface. 
+`#[InjectableVersion]` is applied to a class or interface.
 It denotes that it is this version and not any classes that implement/extend that should be used in the codebase.
 
 E.g.
@@ -415,6 +434,29 @@ NOTES:
 - For determining what is "test code" see the relevant plugin. E.g. the [PHPStan extension](https://github.com/DaveLiddament/phpstan-php-language-extensions) can be setup to either:
     - Assume all classes that end `Test` is test code. See [className config option](https://github.com/DaveLiddament/phpstan-php-language-extensions#exclude-checks-on-class-names-ending-with-test).
     - Assume all classes within a given namespace is test code. See [namespace config option](https://github.com/DaveLiddament/phpstan-php-language-extensions#exclude-checks-based-on-test-namespace).
+
+
+## Deprecated Attributes
+
+### Package (deprecated)
+
+The `#[Package]` attribute acts like an extra visibility modifier like `public`, `protected` and `private`. It is inspired by Java's `package` visibility modifier.
+The `#[Package]` attribute limits the visibility of a class or method to only being accessible from code in the same namespace. 
+
+This has been replaced by the `#[NamespaceVisibility]` attribute. To upgrade replace:
+
+`#[Package]` with `#[NamespaceVisibility(excludeSubNamespaces=true)]`
+
+
+**NOTES:**
+
+- If adding the `#[Package]` to a method, this method MUST have public visibility. 
+- If a class is marked with `#[Package]` then all its public methods are treated as having package visibility. 
+- This is currently limited to method calls (including `__construct`).  
+- Namespaces must match exactly. E.g. a package level method in `Foo\Bar` is only accessible from `Foo\Bar`. It is not accessible from `Foo` or `Foo\Bar\Baz`
+
+
+
 
 ## Further examples
 
