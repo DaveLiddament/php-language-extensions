@@ -54,6 +54,7 @@ jobs:
         uses: "shivammathur/setup-php@v2"
         with:
           php-version: "${{ matrix.php-version }}"
+          coverage: "none"
 
       - name: "Checkout code"
         uses: "actions/checkout@v3"
@@ -70,7 +71,7 @@ jobs:
         run: "composer run ci"
 
   coding_standards:
-    name: "3️⃣ EditorConfig"
+    name: "2️⃣ EditorConfig"
     needs:
       - "byte_level"
     runs-on: "ubuntu-22.04"
@@ -85,7 +86,7 @@ jobs:
         uses: "greut/eclint-action@v0"
 
   exported_files:
-    name: "4️⃣ Exported files"
+    name: "3️⃣ Exported files"
     needs:
       - "byte_level"
     runs-on: "ubuntu-22.04"
