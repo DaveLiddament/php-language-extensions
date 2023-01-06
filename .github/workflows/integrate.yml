@@ -33,32 +33,10 @@ jobs:
         run: |
           ! LC_ALL=C.UTF-8 find . -type f -name '*.php' -print0 | xargs --null -- grep --perl-regexp --with-filename --line-number '[^ -~]'
 
-  syntax_errors:
-    name: "1️⃣ Syntax errors"
-    runs-on: "ubuntu-22.04"
-    steps:
-      - name: "Set up PHP"
-        uses: "shivammathur/setup-php@v2"
-        with:
-          php-version: "8.0"
-          coverage: "none"
-
-      - name: "Checkout code"
-        uses: "actions/checkout@v3"
-
-      - name: "Install dependencies"
-        uses: "ramsey/composer-install@v2"
-        with:
-          dependency-versions: "highest"
-
-      - name: "Check source code for syntax errors"
-        run: "composer run lint"
-
   unit_tests:
-    name: "2️⃣ Unit and functional tests"
+    name: "1️⃣ All tests"
     needs:
       - "byte_level"
-      - "syntax_errors"
     strategy:
       fail-fast: false
       matrix:
@@ -85,63 +63,18 @@ jobs:
         with:
           dependency-versions: "${{ matrix.dependencies }}"
 
-      - name: "Execute unit tests"
-        run: "composer exec -- phpunit -v || echo 'No unit tests yet :('"
-
-#      - name: "Send coverage to Coveralls"
-#        env:
-#          COVERALLS_REPO_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-#        if: "${{ env.COVERALLS_REPO_TOKEN && matrix.php-version == '8.0' && matrix.dependencies == 'highest' }}"
-#        run: |
-#          wget "https://github.com/php-coveralls/php-coveralls/releases/download/v2.5.3/php-coveralls.phar"
-#          php ./php-coveralls.phar -v
-
-  static_analysis:
-    name: "3️⃣ Static Analysis"
-    needs:
-      - "byte_level"
-      - "syntax_errors"
-    runs-on: "ubuntu-22.04"
-    steps:
-      - name: "Set up PHP"
-        uses: "shivammathur/setup-php@v2"
-        with:
-          php-version: "8.0"
-          coverage: "none"
-
-      - name: "Checkout code"
-        uses: "actions/checkout@v3"
-
-      - name: "Validate Composer configuration"
-        run: "composer validate --no-interaction --strict"
-
-      - name: "Install dependencies"
-        uses: "ramsey/composer-install@v2"
-        with:
-          dependency-versions: "highest"
-
       - name: "Check PSR-4 mapping"
         run: "composer dump-autoload --no-interaction --optimize --strict-psr"
 
-      - name: "Perform static analysis (PHPStan)"
-        run: "composer run phpstan"
-
-      - name: "Perform static analysis (Psalm)"
-        run: "composer run psalm"
+      - name: "Run all tests"
+        run: "composer run ci"
 
   coding_standards:
-    name: "4️⃣ Coding Standards"
+    name: "3️⃣ EditorConfig"
     needs:
       - "byte_level"
-      - "syntax_errors"
     runs-on: "ubuntu-22.04"
     steps:
-      - name: "Set up PHP"
-        uses: "shivammathur/setup-php@v2"
-        with:
-          php-version: "8.0"
-          coverage: "none"
-
       - name: "Checkout code"
         uses: "actions/checkout@v3"
 
@@ -151,19 +84,10 @@ jobs:
       - name: "Check adherence to EditorConfig"
         uses: "greut/eclint-action@v0"
 
-      - name: "Install dependencies"
-        uses: "ramsey/composer-install@v2"
-        with:
-          dependency-versions: "highest"
-
-      - name: "Check coding style"
-        run: "composer run cs"
-
   exported_files:
-    name: "5️⃣ Exported files"
+    name: "4️⃣ Exported files"
     needs:
       - "byte_level"
-      - "syntax_errors"
     runs-on: "ubuntu-22.04"
     steps:
       - name: "Checkout code"
