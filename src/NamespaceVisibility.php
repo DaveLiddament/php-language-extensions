@@ -10,7 +10,7 @@ use Attribute;
 final class NamespaceVisibility
 {
     public function __construct(
-        ?string $namespace = null,
+        string $namespace = null,
         bool $excludeSubNamespaces = false,
     ) {
     }
