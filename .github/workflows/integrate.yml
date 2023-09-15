@@ -1,0 +1,103 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+
+name: "Integrate"
+
+on:
+  schedule:
+    - cron: "0 10 * * *"
+  pull_request: null
+  push:
+    branches:
+      - "main"
+  # Add [skip ci] to commit message to skip CI.
+
+permissions: {}
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  byte_level:
+    name: "0️⃣ Byte-level"
+    runs-on: "ubuntu-22.04"
+    steps:
+      - name: "Checkout code"
+        uses: "actions/checkout@v3"
+
+      - name: "Check file permissions"
+        run: |
+          test "$(find . -type f -not -path './.git/*' -executable)" = ""
+
+      - name: "Find non-printable ASCII characters"
+        run: |
+          ! LC_ALL=C.UTF-8 find . -type f -name '*.php' -print0 | xargs --null -- grep --perl-regexp --with-filename --line-number '[^ -~]'
+
+  unit_tests:
+    name: "1️⃣ All tests"
+    needs:
+      - "byte_level"
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - "8.0"
+          - "8.1"
+          - "8.2"
+        dependencies:
+          - "lowest"
+          - "locked"
+          - "highest"
+    runs-on: "ubuntu-22.04"
+    steps:
+      - name: "Set up PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          coverage: "none"
+
+      - name: "Checkout code"
+        uses: "actions/checkout@v3"
+
+      - name: "Install dependencies"
+        uses: "ramsey/composer-install@v2"
+        with:
+          dependency-versions: "${{ matrix.dependencies }}"
+
+      - name: "Check PSR-4 mapping"
+        run: "composer dump-autoload --no-interaction --optimize --strict-psr"
+
+      - name: "Run all tests"
+        run: "composer run ci"
+
+  coding_standards:
+    name: "2️⃣ EditorConfig"
+    needs:
+      - "byte_level"
+    runs-on: "ubuntu-22.04"
+    steps:
+      - name: "Checkout code"
+        uses: "actions/checkout@v3"
+
+      - name: "Check EditorConfig configuration"
+        run: "test -f .editorconfig"
+
+      - name: "Check adherence to EditorConfig"
+        uses: "greut/eclint-action@v0"
+
+  exported_files:
+    name: "3️⃣ Exported files"
+    needs:
+      - "byte_level"
+    runs-on: "ubuntu-22.04"
+    steps:
+      - name: "Checkout code"
+        uses: "actions/checkout@v3"
+
+      - name: "Check exported files"
+        run: |
+          EXPECTED="LICENSE.md,README.md,composer.json"
+          CURRENT="$(git archive HEAD | tar --list --exclude="src" --exclude="src/*" | paste --serial --delimiters=",")"
+          echo "CURRENT =${CURRENT}"
+          echo "EXPECTED=${EXPECTED}"
+          test "${CURRENT}" = "${EXPECTED}"

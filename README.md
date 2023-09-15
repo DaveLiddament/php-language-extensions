@@ -77,7 +77,6 @@ This is loosely based on the C++ friend feature.
 In the example below the `Person::__construct` method can only be called from `PersonBuilder`:
 
 ```php
-
 class Person
 {
     #[Friend(PersonBuilder::class)]
@@ -86,7 +85,6 @@ class Person
         // Some implementation
     }
 }
-
 
 class PersonBuilder
 {
@@ -101,7 +99,6 @@ class PersonBuilder
 
 // ERROR Call to Person::__construct is not from PersonBuilder
 $person = new Person();
-
 ```
 
 **NOTES:**
