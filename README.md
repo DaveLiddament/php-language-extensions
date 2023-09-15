@@ -17,6 +17,7 @@ The intention, at least initially, is that these extra language features are enf
 - [Friend](#friend)
 - [NamespaceVisibility](#namespaceVisibility)
 - [InjectableVersion](#injectableVersion)
+- [Override](#override)
 - [Sealed](#sealed)
 - [TestTag](#testtag)
 
@@ -30,6 +31,7 @@ The intention, at least initially, is that these extra language features are enf
   - [Friend](#friend)
   - [NamespaceVisibility](#namespaceVisibility)
   - [InjectableVersion](#injectableVersion)
+  - [Override](#override)
   - [Sealed](#sealed)
   - [TestTag](#testtag)
   - Deprecated
@@ -369,8 +371,16 @@ class MyService
 
 ```
 
+## Override
 
+The `#[Override]` attribute is used to denote that a method is overriding a method in a parent class. This is the functionality is similar to the `@override` annotation in Java.
 
+This is temporary until PHP 8.3 is released. See the [RFC](https://wiki.php.net/rfc/marking_overriden_methods) that will be implemented in PHP 8.3.
+
+NOTE: 
+
+- If you are using PHP 8.3 then use the real `#[Override]` attribute.
+- This implementation doesn't consider traits. 
 
 ## Sealed
 
