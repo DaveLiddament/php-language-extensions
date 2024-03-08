@@ -408,7 +408,7 @@ class AnotherClass extends Result {}
 
 ## TestTag
 
-The `#[TestTag]` attribute is an idea borrowed from hardware testing. Methods marked with this attribute are only available to test code.
+The `#[TestTag]` attribute is an idea borrowed from hardware testing. Classes or methods marked with this attribute are only available to test code.
 
 E.g.
 
@@ -440,7 +440,8 @@ class PersonTest
 ```
 
 NOTES:
-- Methods with the`#[TestTag]` MUST have public visibility.
+- Classes with the `#[TestTag]` will have an error when any interaction with the class is done.
+- Methods with the `#[TestTag]` MUST have public visibility.
 - For determining what is "test code" see the relevant plugin. E.g. the [PHPStan extension](https://github.com/DaveLiddament/phpstan-php-language-extensions) can be setup to either:
     - Assume all classes that end `Test` is test code. See [className config option](https://github.com/DaveLiddament/phpstan-php-language-extensions#exclude-checks-on-class-names-ending-with-test).
     - Assume all classes within a given namespace is test code. See [namespace config option](https://github.com/DaveLiddament/phpstan-php-language-extensions#exclude-checks-based-on-test-namespace).
