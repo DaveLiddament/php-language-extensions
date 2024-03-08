@@ -21,11 +21,11 @@ class PersonTest
 {
     public function newInstance(): Person
     {
-        return new Person(); // ERROR
+        return new Person(); // No Error
     }
 
     public function buildPerson(): Person
     {
-        return Person::create(); // ERROR
+        return Person::create(); // No error
     }
 }

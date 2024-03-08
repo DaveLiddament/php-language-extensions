@@ -21,11 +21,11 @@ class AnotherClass
 {
     public function newInstance(): Person
     {
-        return new Person();
+        return new Person(); // ERROR
     }
 
     public function buildPerson(): Person
     {
-        return Person::create();
+        return Person::create(); // ERROR
     }
 }
