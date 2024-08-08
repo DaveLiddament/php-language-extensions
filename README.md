@@ -19,6 +19,7 @@ The intention, at least initially, is that these extra language features are enf
 - [NamespaceVisibility](#namespaceVisibility)
 - [InjectableVersion](#injectableVersion)
 - [Override](#override)
+- [RestrictTraitTo](#restricttraitto)
 - [Sealed](#sealed)
 - [TestTag](#testtag)
 
@@ -34,6 +35,7 @@ The intention, at least initially, is that these extra language features are enf
   - [NamespaceVisibility](#namespaceVisibility)
   - [InjectableVersion](#injectableVersion)
   - [Override](#override)
+  - [RestrictTraitTo](#restricttraitto)
   - [Sealed](#sealed)
   - [TestTag](#testtag)
   - Deprecated
@@ -416,6 +418,32 @@ NOTE:
 
 - If you are using PHP 8.3 then use the real `#[Override]` attribute.
 - This implementation doesn't consider traits. 
+
+## RestrictTraitTo
+
+This limits the use of a Trait to only be used by a specified class of a child of that class.
+
+E.g. this trait is limited to classes that are or extend `Controller`
+
+```php
+#[RestrictTraitTo(Controller::class)]
+trait ControllerHelpers {}
+```
+
+This would be allowed:
+```php
+class LoginController extends Controller {
+    use ControllerHelpers;
+}
+```
+
+But this would NOT be allowed:
+```php
+class Repository {
+    use ControllerHelpers;
+}
+```
+
 
 ## Sealed
 
