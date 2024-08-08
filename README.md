@@ -15,6 +15,7 @@ The intention, at least initially, is that these extra language features are enf
 
 **Language feature added:**
 - [Friend](#friend)
+- [MustUseResult](#mustuseresult)
 - [NamespaceVisibility](#namespaceVisibility)
 - [InjectableVersion](#injectableVersion)
 - [Override](#override)
@@ -29,6 +30,7 @@ The intention, at least initially, is that these extra language features are enf
   - [Psalm](#psalm)
 - [New Language Features](#new-language-features)
   - [Friend](#friend)
+  - [MustUseResult](#mustuseresult)
   - [NamespaceVisibility](#namespaceVisibility)
   - [InjectableVersion](#injectableVersion)
   - [Override](#override)
@@ -129,7 +131,40 @@ $person = new Person();
   ```  
 - This is currently limited to method calls (including `__construct`).
 
+## MustUseResult
 
+Add #[MustUseResult] attribute that can be used on methods. This enforces the result from the method call must be used.
+
+E.g. if you have a class like this:
+
+```php
+
+class Money {
+
+  public function __construct(public readonly int $pence)
+  {}
+  
+  #[MustUseResult]
+  public function add(int $pence): self
+  {
+     return new self($pence + $this->pence);
+  }
+}
+```
+
+You might misuse the `add` method in this way:
+
+```php
+$cost = new Money(5);
+$cost->add(6); // ERROR - This statement has no effect. 
+```
+
+But this would be OK:
+
+```php
+$cost = new Money(5);
+$updatedCost = $cost->add(6); // OK - The return from add method is being used.
+```
 
 ## NamespaceVisibility
 
