@@ -1,6 +1,6 @@
 <?php
 
-namespace TestTagOnConstructor;
+namespace TestTagOnClassIgnoredInTestClass;
 
 use DaveLiddament\PhpLanguageExtensions\TestTag;
 
@@ -11,9 +11,13 @@ class Person
     {
     }
 
-    public static function create(): Person // No Error, class can interact with itself
+    public static function create(): Person // OK, class can interact with itself
     {
-        return new Person(); // No Error, class can interact with itself
+        return new Person(); // OK, class can interact with itself
+    }
+
+    public function aMethod(): void
+    {
     }
 }
 
@@ -21,11 +25,16 @@ class PersonTest
 {
     public function newInstance(): Person
     {
-        return new Person(); // No Error
+        return new Person(); // OK, call from test class
     }
 
     public function buildPerson(): Person
     {
-        return Person::create(); // No error
+        return Person::create(); // OK, call from test class
+    }
+
+    public function aMethod(Person $person): void
+    {
+        $this->aMethod(); // OK, call from test class
     }
 }
