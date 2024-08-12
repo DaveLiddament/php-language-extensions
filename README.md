@@ -135,7 +135,7 @@ $person = new Person();
 
 ## MustUseResult
 
-Add #[MustUseResult] attribute that can be used on methods. This enforces the result from the method call must be used.
+A `#[MustUseResult]` attribute can be used on methods. This enforces the result from the method call must be used.
 
 E.g. if you have a class like this:
 
@@ -158,7 +158,7 @@ You might misuse the `add` method in this way:
 
 ```php
 $cost = new Money(5);
-$cost->add(6); // ERROR - This statement has no effect. 
+$cost->add(6); // ERROR - The call to the add method has no effect. 
 ```
 
 But this would be OK:
