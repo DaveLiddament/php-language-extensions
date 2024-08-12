@@ -15,9 +15,11 @@ The intention, at least initially, is that these extra language features are enf
 
 **Language feature added:**
 - [Friend](#friend)
+- [MustUseResult](#mustuseresult)
 - [NamespaceVisibility](#namespaceVisibility)
 - [InjectableVersion](#injectableVersion)
 - [Override](#override)
+- [RestrictTraitTo](#restricttraitto)
 - [Sealed](#sealed)
 - [TestTag](#testtag)
 
@@ -29,9 +31,11 @@ The intention, at least initially, is that these extra language features are enf
   - [Psalm](#psalm)
 - [New Language Features](#new-language-features)
   - [Friend](#friend)
+  - [MustUseResult](#mustuseresult)
   - [NamespaceVisibility](#namespaceVisibility)
   - [InjectableVersion](#injectableVersion)
   - [Override](#override)
+  - [RestrictTraitTo](#restricttraitto)
   - [Sealed](#sealed)
   - [TestTag](#testtag)
   - Deprecated
@@ -129,7 +133,40 @@ $person = new Person();
   ```  
 - This is currently limited to method calls (including `__construct`).
 
+## MustUseResult
 
+Add #[MustUseResult] attribute that can be used on methods. This enforces the result from the method call must be used.
+
+E.g. if you have a class like this:
+
+```php
+
+class Money {
+
+  public function __construct(public readonly int $pence)
+  {}
+  
+  #[MustUseResult]
+  public function add(int $pence): self
+  {
+     return new self($pence + $this->pence);
+  }
+}
+```
+
+You might misuse the `add` method in this way:
+
+```php
+$cost = new Money(5);
+$cost->add(6); // ERROR - This statement has no effect. 
+```
+
+But this would be OK:
+
+```php
+$cost = new Money(5);
+$updatedCost = $cost->add(6); // OK - The return from add method is being used.
+```
 
 ## NamespaceVisibility
 
@@ -381,6 +418,32 @@ NOTE:
 
 - If you are using PHP 8.3 then use the real `#[Override]` attribute.
 - This implementation doesn't consider traits. 
+
+## RestrictTraitTo
+
+This limits the use of a Trait to only be used by a specified class of a child of that class.
+
+E.g. this trait is limited to classes that are or extend `Controller`
+
+```php
+#[RestrictTraitTo(Controller::class)]
+trait ControllerHelpers {}
+```
+
+This would be allowed:
+```php
+class LoginController extends Controller {
+    use ControllerHelpers;
+}
+```
+
+But this would NOT be allowed:
+```php
+class Repository {
+    use ControllerHelpers;
+}
+```
+
 
 ## Sealed
 
