@@ -115,7 +115,7 @@ $person = new Person();
   #[Friend(Foo::class)]
   class Entity
   {
-    public function ping(): void // ping has friend Bar
+    public function ping(): void // ping has friend Foo
     {
     }
   }
