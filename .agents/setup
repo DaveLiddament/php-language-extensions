@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Orb setup: installs PHP, Composer, and locked dev dependencies so `composer ci` works.
+set -euo pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
+step() {
+  local name="$1"
+  shift
+  echo "==> $name"
+  local start=$SECONDS
+  "$@"
+  echo "<== $name ($((SECONDS - start))s)"
+}
+
+install_system_packages() {
+  local packages=(php-cli php-mbstring php-xml php-zip unzip composer)
+  local missing=()
+  for pkg in "${packages[@]}"; do
+    dpkg-query -W -f='${Status}' "$pkg" 2>/dev/null | grep -q "install ok installed" || missing+=("$pkg")
+  done
+  if [ ${#missing[@]} -eq 0 ]; then
+    echo "System packages already installed"
+    return
+  fi
+  sudo apt-get update -qq
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends "${missing[@]}"
+}
+
+install_composer_dependencies() {
+  composer install --no-interaction --no-progress
+}
+
+step "Install system packages" install_system_packages
+php --version | head -n1
+composer --version
+step "Install Composer dependencies" install_composer_dependencies

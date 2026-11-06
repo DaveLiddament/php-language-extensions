@@ -3,3 +3,4 @@
 .vagrant
 Vagrantfile
 vendor/
+.amp/portals/*
