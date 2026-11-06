@@ -23,6 +23,7 @@ return $config
             'phpdoc_align' => false,
             'phpdoc_to_comment' => false,
             'native_function_invocation' => false,
+            'declare_strict_types' => true,
         ]
     )
     ->setFinder($finder)
