@@ -21,11 +21,11 @@ namespace MustUseResultOnMethod {
     }
 
 
-    AClass::dontNeedToUseResult(); // OK
+    AClass::dontNeedToUseResult(); // OK: dontNeedToUseResult does not have the MustUseResult attribute
 
-    AClass::mustUseResult(); // ERROR
+    AClass::mustUseResult(); // ERROR: Result of mustUseResult is not used
 
-    echo AClass::mustUseResult(); // OK;
+    echo AClass::mustUseResult(); // OK: Result of mustUseResult is used
 
-    $value = 1 + AClass::mustUseResult(); // OK
+    $value = 1 + AClass::mustUseResult(); // OK: Result of mustUseResult is used
 }

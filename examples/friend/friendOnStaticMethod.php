@@ -13,7 +13,7 @@ class Person
 
     public static function update(): void
     {
-        Person::updateName(); // OK: Method calls within class allowed
+        self::updateName(); // OK: Method calls within class allowed
     }
 }
 
@@ -25,7 +25,7 @@ class Updater
     }
 }
 
-Person::updateName(); // ERROR
+Person::updateName(); // ERROR: Global namespace is not a friend of Person::updateName
 
 class FriendUpdater
 {

@@ -22,7 +22,7 @@ interface Interface1 {}
 
 
 class AClass {
-    use UseAnywhere; // OK
+    use UseAnywhere; // OK: UseAnywhere has no restrictions
     use UseOnlyOnInterface1; // ERROR RestrictTraitTo\Interface1
     use UseOnlyOnAbstractClass1; // ERROR RestrictTraitTo\AbstractClass1
     use UseOnlyOnClass2; // ERROR RestrictTraitTo\Class2
@@ -30,8 +30,8 @@ class AClass {
 
 
 class ImplementsInterface1 implements Interface1 {
-    use UseAnywhere; // OK
-    use UseOnlyOnInterface1; // OK
+    use UseAnywhere; // OK: UseAnywhere has no restrictions
+    use UseOnlyOnInterface1; // OK: ImplementsInterface1 implements Interface1
     use UseOnlyOnAbstractClass1; // ERROR RestrictTraitTo\AbstractClass1
     use UseOnlyOnClass2; // ERROR RestrictTraitTo\Class2
 }
@@ -42,15 +42,15 @@ abstract class AbstractClass1
 }
 
 class ExtendsAbstractClass1 extends AbstractClass1 {
-    use UseAnywhere; // OK
+    use UseAnywhere; // OK: UseAnywhere has no restrictions
     use UseOnlyOnInterface1; // ERROR RestrictTraitTo\Interface1
-    use UseOnlyOnAbstractClass1; // OK
+    use UseOnlyOnAbstractClass1; // OK: ExtendsAbstractClass1 extends AbstractClass1
     use UseOnlyOnClass2; // ERROR RestrictTraitTo\Class2
 }
 
 class Class2 {
-    use UseAnywhere; // OK
+    use UseAnywhere; // OK: UseAnywhere has no restrictions
     use UseOnlyOnInterface1; // ERROR RestrictTraitTo\Interface1
     use UseOnlyOnAbstractClass1; // ERROR RestrictTraitTo\AbstractClass1
-    use UseOnlyOnClass2; // OK
+    use UseOnlyOnClass2; // OK: UseOnlyOnClass2 is used on Class2
 }

@@ -28,7 +28,7 @@ namespace OverrideOnClass {
         {
         }
 
-        #[Override] public function method4(): void // ERROR
+        #[Override] public function method4(): void // ERROR method4
         {
         }
     }
@@ -43,7 +43,7 @@ namespace OverrideOnClass {
         {
         }
 
-        #[Override] public function method3(): void // ERROR
+        #[Override] public function method3(): void // ERROR method3
         {
         }
     };

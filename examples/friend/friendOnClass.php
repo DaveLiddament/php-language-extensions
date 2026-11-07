@@ -16,7 +16,7 @@ class Person
 
     public function update(): void
     {
-        $this->updateName(); // OK
+        $this->updateName(); // OK: Method calls on same class are always allowed
     }
 }
 
@@ -29,13 +29,13 @@ class Updater
 }
 
 $person = new Person();
-$person->updateName(); // ERROR
+$person->updateName(); // ERROR: Global namespace is not a Friend of Person
 
 class FriendUpdater
 {
     public function update(): void
     {
         $person = new Person();
-        $person->updateName(); // OK
+        $person->updateName(); // OK: FriendUpdater is a Friend of Person
     }
 }

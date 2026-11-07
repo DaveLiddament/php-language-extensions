@@ -26,6 +26,6 @@ class AnotherClass
 {
     public function buildPerson(): Person
     {
-        return new Person(); // ERROR
+        return new Person(); // ERROR: Person has TestTag, so can only be created from test code
     }
 }

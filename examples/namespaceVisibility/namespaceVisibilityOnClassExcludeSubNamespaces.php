@@ -18,7 +18,7 @@ namespace NamespaceVisibilityOnClassExcludeSubNamespaces {
 }
 
 
-namespace NamespaceVisibilityOnClassExcludeSubNamespace\SubNamesapce {
+namespace NamespaceVisibilityOnClassExcludeSubNamespaces\SubNamesapce {
 
     use NamespaceVisibilityOnClassExcludeSubNamespaces\Person;
 

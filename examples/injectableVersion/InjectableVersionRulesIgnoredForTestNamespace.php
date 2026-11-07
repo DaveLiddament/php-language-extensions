@@ -23,7 +23,7 @@ namespace InjectableVersionRulesIgnoredForTestNamespace\Test {
 
     class ServiceDouble
     {
-        public function __construct(public RepositoryDouble $repository) // OK as in test namespace and this excluded from checks
+        public function __construct(public RepositoryDouble $repository) // OK: in test namespace, which is excluded from checks
         {
         }
     }

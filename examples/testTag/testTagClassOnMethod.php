@@ -23,10 +23,10 @@ class Updater
 {
     public function updater(Person $person): void
     {
-        $person->updateName(); // ERROR
+        $person->updateName(); // ERROR: Person has TestTag, so its methods can only be called from test code
     }
 }
 
 $person = new Person();
-$person->updateName(); // ERROR
+$person->updateName(); // ERROR: Person has TestTag, so its methods can only be called from test code
 

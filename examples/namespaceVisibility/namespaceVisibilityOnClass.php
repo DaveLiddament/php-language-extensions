@@ -49,9 +49,9 @@ namespace NamespaceVisibilityOnClass\SubNamesapce {
 }
 
 
-namespace NamespaceOnClass2 {
+namespace NamespaceVisibilityOnClass2 {
 
-    use PackageOnClass\Person;
+    use NamespaceVisibilityOnClass\Person;
 
     class AnotherUpdater
     {

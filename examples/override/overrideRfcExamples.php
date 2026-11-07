@@ -37,40 +37,40 @@ namespace overrideRfcExample5 {
     use DaveLiddament\PhpLanguageExtensions\Override;
 
     interface I {
-        public function i();
+        public function i(): void;
     }
 
     interface II extends I {
         #[Override]
-        public function i();
+        public function i(): void;
     }
 
     class P {
-        public function p1() {}
-        public function p2() {}
-        public function p3() {}
-        public function p4() {}
+        public function p1(): void {}
+        public function p2(): void {}
+        public function p3(): void {}
+        public function p4(): void {}
     }
 
     class PP extends P {
         #[Override]
-        public function p1() {}
-        public function p2() {}
+        public function p1(): void {}
+        public function p2(): void {}
         #[Override]
-        public function p3() {}
+        public function p3(): void {}
     }
 
     class C extends PP implements I {
         #[Override]
-        public function i() {}
+        public function i(): void {}
         #[Override]
-        public function p1() {}
+        public function p1(): void {}
         #[Override]
-        public function p2() {}
-        public function p3() {}
+        public function p2(): void {}
+        public function p3(): void {}
         #[Override]
-        public function p4() {}
-        public function c() {}
+        public function p4(): void {}
+        public function c(): void {}
     }
 }
 

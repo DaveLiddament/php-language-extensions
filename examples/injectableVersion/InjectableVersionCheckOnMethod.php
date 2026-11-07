@@ -21,7 +21,7 @@ class InjectingCorrectVersion
     public Repository $repository;
 
     #[CheckInjectableVersion]
-    public function setRepository(Repository $repository): void // OK
+    public function setRepository(Repository $repository): void // OK: Repository is the InjectableVersion
     {
         $this->repository = $repository;
     }
@@ -32,7 +32,7 @@ class InjectingWrongVersion
     public Repository $repository;
 
     #[CheckInjectableVersion]
-    public function setRepository(DoctrineRepository $repository): void // ERROR
+    public function setRepository(DoctrineRepository $repository): void // ERROR: DoctrineRepository injected, should inject the InjectableVersion Repository
     {
         $this->repository = $repository;
     }

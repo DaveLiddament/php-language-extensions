@@ -29,7 +29,7 @@ namespace NamespaceVisibilityOnConstructorExcludeSubNamespaces {
 }
 
 
-namespace NamespaceVisibilityOnConstructorExcludeSubNamespace\SubNamespace {
+namespace NamespaceVisibilityOnConstructorExcludeSubNamespaces\SubNamespace {
 
     use NamespaceVisibilityOnConstructorExcludeSubNamespaces\Person;
 
@@ -37,7 +37,7 @@ namespace NamespaceVisibilityOnConstructorExcludeSubNamespace\SubNamespace {
     {
         public function create(): void
         {
-            new Person(); // Error, sub namespace of NamespaceVisibilityOnConstructor and this is not allowed
+            new Person(); // ERROR: sub namespace of NamespaceVisibilityOnConstructorExcludeSubNamespaces, where sub namespace is not allowed
         }
     }
 }
