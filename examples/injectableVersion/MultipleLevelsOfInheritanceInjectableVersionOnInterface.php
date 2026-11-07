@@ -23,15 +23,15 @@ class SecondLevelOfInheritance implements FirstLevelOfInheritance
 
 class InjectingCorrectVersion
 {
-    public function __construct(public CorrectVersion $repository) {} // OK
+    public function __construct(public CorrectVersion $repository) {} // OK: CorrectVersion is the InjectableVersion
 }
 
 class InjectingWrongVersion1
 {
-    public function __construct(public FirstLevelOfInheritance $repository) {} // ERROR
+    public function __construct(public FirstLevelOfInheritance $repository) {} // ERROR: FirstLevelOfInheritance injected, should inject the InjectableVersion CorrectVersion
 }
 
 class InjectingWrongVersion2
 {
-    public function __construct(public SecondLevelOfInheritance $repository) {} // ERROR
+    public function __construct(public SecondLevelOfInheritance $repository) {} // ERROR: SecondLevelOfInheritance injected, should inject the InjectableVersion CorrectVersion
 }

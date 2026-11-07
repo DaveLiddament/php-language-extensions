@@ -15,14 +15,14 @@ namespace NamespaceVisibilityOnMethodExcludeSubNamespace {
 
         public function update(): void
         {
-            $this->updateName(); // OK
+            $this->updateName(); // OK: Calls to same class allowed
         }
     }
 }
 
 
 
-namespace NamespaceVisibilityOnMethodExluceSubNamespace\SubNamespace {
+namespace NamespaceVisibilityOnMethodExcluceSubNamespace\SubNamespace {
 
     use NamespaceVisibilityOnMethodExcludeSubNamespace\Person;
     class AnotherPersonUpdater

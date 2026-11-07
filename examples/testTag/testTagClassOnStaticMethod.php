@@ -27,8 +27,8 @@ class Updater
 {
     public function updater(): void
     {
-        Person::updateName(); // ERROR
+        Person::updateName(); // ERROR: Person has TestTag, so its methods can only be called from test code
     }
 }
 
-Person::updateName(); // ERROR
+Person::updateName(); // ERROR: Person has TestTag, so its methods can only be called from test code

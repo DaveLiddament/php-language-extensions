@@ -15,7 +15,7 @@ namespace PackageOnMethod {
 
         public function update(): void
         {
-            $this->updateName(); // OK
+            $this->updateName(); // OK: Calls to same class allowed
         }
     }
 
@@ -23,12 +23,12 @@ namespace PackageOnMethod {
     {
         public function updater(Person $person): void
         {
-            $person->updateName(); // OK
+            $person->updateName(); // OK: Calls within same package allowed
         }
     }
 
     $person = new Person();
-    $person->updateName(); // OK
+    $person->updateName(); // OK: Calls within same package allowed
 }
 
 namespace PackageOnMethod2 {

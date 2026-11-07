@@ -31,3 +31,17 @@ namespace NamespaceVisibilityOnClassDifferentNamespace {
         }
     }
 }
+
+namespace NamespaceVisibilityOnClassAnotherNamespace {
+
+    use NamespaceVisibilityOnClassForDifferentNamespaces\Person;
+
+    class AnotherClass
+    {
+        public function update(): void
+        {
+            $person = new Person();
+            $person->updateName(); // ERROR: Call to Person::updateName is not in the allowed namespace.
+        }
+    }
+}

@@ -15,6 +15,11 @@ class Person
     {
         return new Person(); // OK: Method calls on same class always allowed.
     }
+
+    public static function createSelf(): self
+    {
+        return new self(); // OK: Method calls on same class always allowed.
+    }
 }
 
 class Exam
@@ -25,7 +30,7 @@ class Exam
     }
 }
 
-new Person(); // ERROR
+new Person(); // ERROR: Global namespace is not a Friend of Person::__construct
 
 class PersonBuilder
 {

@@ -15,6 +15,11 @@ namespace PackageOnConstructor {
         {
             return new Person(); // OK: Calls to same class allowed.
         }
+
+        public static function createSelf(): self
+        {
+            return new self(); // OK: Calls to same class allowed.
+        }
     }
 
     class PersonBuilder

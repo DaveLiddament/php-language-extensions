@@ -21,7 +21,7 @@ class InjectingCorrectVersion
     public function __construct(
         public Repository $repository,
         public int $int
-    ) {} // OK
+    ) {} // OK: Repository is the InjectableVersion
 }
 
 class InjectingWrongVersion
@@ -31,5 +31,5 @@ class InjectingWrongVersion
         public string $string,
         public $unknownType,
         public DoctrineRepository $repository
-    ) {} // ERROR
+    ) {} // ERROR: DoctrineRepository injected, should inject the InjectableVersion Repository
 }

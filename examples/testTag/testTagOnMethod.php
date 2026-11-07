@@ -15,7 +15,7 @@ class Person
 
     public function update(): void
     {
-        $this->updateName(); // ERROR
+        $this->updateName(); // ERROR: Person::updateName has TestTag, so can only be called from test code (even from within Person)
     }
 }
 
@@ -23,10 +23,10 @@ class Updater
 {
     public function updater(Person $person): void
     {
-        $person->updateName(); // ERROR
+        $person->updateName(); // ERROR: Person::updateName has TestTag, so can only be called from test code
     }
 }
 
 $person = new Person();
-$person->updateName(); // ERROR
+$person->updateName(); // ERROR: Person::updateName has TestTag, so can only be called from test code
 

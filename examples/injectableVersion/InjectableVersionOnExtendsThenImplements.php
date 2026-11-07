@@ -22,10 +22,10 @@ class DoctrineRepository extends AbstractDoctrineRepository
 
 class InjectingWrongVersion1
 {
-    public function __construct(public AbstractDoctrineRepository $repository) {} // ERROR
+    public function __construct(public AbstractDoctrineRepository $repository) {} // ERROR: AbstractDoctrineRepository injected, should inject the InjectableVersion Repository
 }
 
 class InjectingWrongVersion2
 {
-    public function __construct(public DoctrineRepository $repository) {} // ERROR
+    public function __construct(public DoctrineRepository $repository) {} // ERROR: DoctrineRepository injected, should inject the InjectableVersion Repository
 }
