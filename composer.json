@@ -32,10 +32,7 @@
   "scripts": {
     "composer-validate": "@composer validate --no-check-all --strict",
     "cs-fix": "php-cs-fixer fix",
-    "cs": [
-      "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
-      "php-cs-fixer fix --dry-run -v"
-    ],
+    "cs": "php-cs-fixer fix --dry-run -v",
     "phpstan": "phpstan analyse",
     "lint": "parallel-lint src",
     "ci": [
