@@ -14,17 +14,25 @@ step() {
 }
 
 install_system_packages() {
-  local packages=(php-cli php-mbstring php-xml php-zip unzip composer)
+  # Debian's own PHP is too old (the project needs PHP 8.3+), so use the sury.org PHP repository.
+  local packages=(php8.3-cli php8.3-mbstring php8.3-xml php8.3-zip unzip composer)
   local missing=()
   for pkg in "${packages[@]}"; do
     dpkg-query -W -f='${Status}' "$pkg" 2>/dev/null | grep -q "install ok installed" || missing+=("$pkg")
   done
-  if [ ${#missing[@]} -eq 0 ]; then
+  if [ ${#missing[@]} -ne 0 ]; then
+    if [ ! -f /etc/apt/sources.list.d/php.list ]; then
+      curl -sSLo /tmp/debsuryorg-archive-keyring.deb https://packages.sury.org/debsuryorg-archive-keyring.deb
+      sudo dpkg -i /tmp/debsuryorg-archive-keyring.deb
+      echo "deb [signed-by=/usr/share/keyrings/debsuryorg-archive-keyring.gpg] https://packages.sury.org/php/ $(. /etc/os-release && echo "$VERSION_CODENAME") main" \
+        | sudo tee /etc/apt/sources.list.d/php.list >/dev/null
+    fi
+    sudo apt-get update -qq
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends "${missing[@]}"
+  else
     echo "System packages already installed"
-    return
   fi
-  sudo apt-get update -qq
-  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends "${missing[@]}"
+  sudo update-alternatives --set php /usr/bin/php8.3
 }
 
 install_composer_dependencies() {
