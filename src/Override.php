@@ -6,6 +6,8 @@ namespace DaveLiddament\PhpLanguageExtensions;
 
 /**
  * Add to a method to indicate it is overriding a method in a parent class/interface.
+ *
+ * @deprecated use PHP's language-supported #[\Override] attribute
  */
 #[\Attribute(\Attribute::TARGET_METHOD)]
 final class Override

@@ -18,7 +18,6 @@ The intention, at least initially, is that these extra language features are enf
 - [MustUseResult](#mustuseresult)
 - [NamespaceVisibility](#namespaceVisibility)
 - [InjectableVersion](#injectableVersion)
-- [Override](#override)
 - [RestrictTraitTo](#restricttraitto)
 - [Sealed](#sealed)
 - [TestTag](#testtag)
@@ -34,12 +33,12 @@ The intention, at least initially, is that these extra language features are enf
   - [MustUseResult](#mustuseresult)
   - [NamespaceVisibility](#namespaceVisibility)
   - [InjectableVersion](#injectableVersion)
-  - [Override](#override)
   - [RestrictTraitTo](#restricttraitto)
   - [Sealed](#sealed)
   - [TestTag](#testtag)
   - Deprecated
-    - [Package](#package) replace with [NamespaceVisibility](#namespaceVisibility)
+    - [Package](#package-deprecated) replace with [NamespaceVisibility](#namespaceVisibility)
+    - [Override](#override-deprecated) replace with PHP's language-supported `#[\Override]` attribute
     
 - [Further examples](#further-examples)
 - [Contributing](#contributing)
@@ -408,17 +407,6 @@ class MyService
 
 ```
 
-## Override
-
-The `#[Override]` attribute is used to denote that a method is overriding a method in a parent class. This is the functionality is similar to the `@override` annotation in Java.
-
-This is temporary until PHP 8.3 is released. See the [RFC](https://wiki.php.net/rfc/marking_overriden_methods) that will be implemented in PHP 8.3.
-
-NOTE: 
-
-- If you are using PHP 8.3 then use the real `#[Override]` attribute.
-- This implementation doesn't consider traits. 
-
 ## RestrictTraitTo
 
 This limits the use of a Trait to only be used by a specified class of a child of that class.
@@ -530,6 +518,19 @@ This has been replaced by the `#[NamespaceVisibility]` attribute. To upgrade rep
 - Namespaces must match exactly. E.g. a package level method in `Foo\Bar` is only accessible from `Foo\Bar`. It is not accessible from `Foo` or `Foo\Bar\Baz`
 
 
+
+
+### Override (deprecated)
+
+The `#[Override]` attribute is used to denote that a method is overriding a method in a parent class. This is the functionality is similar to the `@override` annotation in Java.
+
+This has been replaced by the language-supported `#[\Override]` attribute, introduced in PHP 8.3 (see the [RFC](https://wiki.php.net/rfc/marking_overriden_methods)). To upgrade replace:
+
+`#[Override]` (from `DaveLiddament\PhpLanguageExtensions`) with `#[\Override]`
+
+NOTE: 
+
+- This implementation doesn't consider traits. 
 
 
 ## Further examples
